@@ -1,0 +1,13 @@
+Package: brackets
+Title: Wrapper around brackets-viewer.js: a simple library to display tournament brackets.
+Version: 0.0.0.9000
+Authors@R: 
+    person("Veerle", "van Leemput", , "hello@myemail.com", role = c("aut", "cre"))
+Description: Display tournament brackets (round-robin, single elimination, double elimination) 
+    of any length at any stage of its lifetime. The data needed follows the opinionated 
+    brackets-model data structure. And optionally, the data can be generated and managed 
+    using the brackets-manager.js library.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
