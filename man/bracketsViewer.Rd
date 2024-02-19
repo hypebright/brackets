@@ -2,14 +2,25 @@
 % Please edit documentation in R/bracketsViewer.R
 \name{bracketsViewer}
 \alias{bracketsViewer}
-\title{\if{html}{\out{
-<Add Title>
-}}}
+\title{View tournament brackets}
 \usage{
-bracketsViewer(message, width = NULL, height = NULL, elementId = NULL)
+bracketsViewer(width = NULL, height = NULL, elementId = NULL)
 }
 \description{
-\if{html}{\out{
-<Add Description>
-}}
+Visualize tournament brackets by providing data following the brackets-model
+schema. The data should be a list with the following fields:
+\itemize{
+\item \code{participant} A list of participants, each participant should be
+a list with the following fields: \code{id}, \code{tournament_id},
+\code{name}.
+\item \code{stage} A list of stages, each stage should be a list with the
+following fields: \code{id}, \code{tournament_id}, \code{name}, \code{type},
+\code{number}, \code{settings}.
+\item \code{round} A list of rounds, each round should be a list with the
+following fields: \code{id}, \code{number}, \code{stage_id}, \code{group_id}.
+\item \code{match} A list of matches, each match should be a list with the
+following fields: \code{id}, \code{number}, \code{stage_id}, \code{group_id},
+\code{round_id}, \code{child_count}, \code{status}, \code{opponent1},
+\code{opponent2}.
+}
 }
