@@ -1,3 +1,4 @@
 ^brackets\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^node_modules$
