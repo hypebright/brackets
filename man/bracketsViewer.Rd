@@ -4,7 +4,10 @@
 \alias{bracketsViewer}
 \title{View tournament brackets}
 \usage{
-bracketsViewer(width = NULL, height = NULL, elementId = NULL)
+bracketsViewer(data, width = NULL, height = NULL, elementId = NULL)
+}
+\arguments{
+\item{data}{A containing the tournaments brackets data, see description.}
 }
 \description{
 Visualize tournament brackets by providing data following the brackets-model
