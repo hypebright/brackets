@@ -23,7 +23,8 @@ HTMLWidgets.widget({
               if (HTMLWidgets.shinyMode) {
                 Shiny.setInputValue(el.id + "_match_click", match.id);
               }
-            }
+            },
+            clear: true
           }
         );
 
