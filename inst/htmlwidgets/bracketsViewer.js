@@ -4,14 +4,11 @@ HTMLWidgets.widget({
   type: "output",
 
   factory: function(el, width, height) {
-    // TODO: define shared variables for this instance
+    var scale = 1;
 
     return {
       renderValue: function(opts) {
-        
         const elementId = el.id + "-brackets-viewer";
-        
-        el.innerHTML = '<div id="' + elementId + '" class="brackets-viewer"></div>';
 
         window.bracketsViewer.render(
           {
@@ -21,14 +18,31 @@ HTMLWidgets.widget({
             participants: opts.data.participant
           },
           {
-            selector: "#" + elementId
+            selector: "#" + elementId,
+            onMatchClick: function(match) {
+              if (HTMLWidgets.shinyMode) {
+                Shiny.setInputValue(el.id + "_match_click", match.id);
+              }
+            }
           }
         );
+
+        //add event listeners on click for elementId + -zoom-in and elementId + -zoom-out
+        document.getElementById(elementId + "-zoom-in").addEventListener("click", function() {
+            scale += 0.1;
+            console.log(scale);
+            document.getElementById(elementId).style.transform = `scale(${scale})`;
+          });
+
+        document.getElementById(elementId + "-zoom-out").addEventListener("click", function() {
+            scale -= 0.1;
+            console.log(scale);
+            document.getElementById(elementId).style.transform = `scale(${scale})`;
+          });
       },
 
-      resize: function(width, height) {
-        // TODO: code to re-render the widget with a new size
-      }
+      resize: function(width, height) {}
+      
     };
   }
 });

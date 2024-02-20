@@ -17,17 +17,17 @@
 #'  \code{opponent2}.
 #' }
 #' 
-#' @param data A containing the tournaments brackets data, see description.
+#' @param data A list containing the tournaments brackets data, see description.
 #' @import htmlwidgets
 #'
 #' @export
 bracketsViewer <- function(data, width = NULL, height = NULL, elementId = NULL) {
-
+  
   # forward options using x
   opts = list(
     data = data
   )
-
+  
   # create widget
   htmlwidgets::createWidget(
     name = 'bracketsViewer',
@@ -35,7 +35,11 @@ bracketsViewer <- function(data, width = NULL, height = NULL, elementId = NULL) 
     width = width,
     height = height,
     package = 'brackets',
-    elementId = elementId
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      padding = 10,
+      browser.fill = TRUE
+    )
   )
 }
 
@@ -56,7 +60,7 @@ bracketsViewer <- function(data, width = NULL, height = NULL, elementId = NULL) 
 #' @name bracketsViewer-shiny
 #'
 #' @export
-bracketsViewerOutput <- function(outputId, width = '100%', height = '400px'){
+bracketsViewerOutput <- function(outputId, width = '100%', height = '100%'){
   htmlwidgets::shinyWidgetOutput(outputId, 'bracketsViewer', width, height, package = 'brackets')
 }
 
@@ -65,4 +69,23 @@ bracketsViewerOutput <- function(outputId, width = '100%', height = '400px'){
 renderBracketsViewer <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, bracketsViewerOutput, env, quoted = TRUE)
+}
+
+#' @keywords internal
+bracketsViewer_html <- function(id, style, class, ...) {
+  tags$div(
+    id = id, 
+    style = paste0(style, "overflow:scroll;"), 
+    class = class,
+    tags$div(
+      style = "position: absolute; z-index: 1;",
+      tags$button(id = paste0(id, "-brackets-viewer-zoom-in"), "+"),
+      tags$button(id = paste0(id, "-brackets-viewer-zoom-out"), "-")
+    ),
+    tags$div(
+      id = paste0(id, "-brackets-viewer"),
+      class = "brackets-viewer",
+      style = "transition: transform 0.3s ease; transform-origin: top left;"
+    )
+  )
 }

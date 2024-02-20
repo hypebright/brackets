@@ -23,6 +23,10 @@ server <- function(input, output) {
     )
   })
   
+  observe({
+    print(input$tennis_match_click)
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)
