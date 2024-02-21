@@ -85,7 +85,7 @@ bracketsViewer_html <- function(id, style, class, ...) {
     tags$div(
       id = paste0(id, "-brackets-viewer"),
       class = "brackets-viewer",
-      style = "transition: transform 0.3s ease; transform-origin: top left;"
+      style = "transition: transform 0.3s ease; transform-origin: top left; margin: 0;"
     )
   )
 }
