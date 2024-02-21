@@ -5,11 +5,16 @@ source("global.R", local = TRUE)
 
 ui <- fluidPage(
   titlePanel("Bracket Viewer"),
+  br(),
+  actionButton("update_tennis_match", "Update Grand Final"),
+  br(),
+  br(),
   bracketsViewerOutput("tennis"),
+  br(),
   bracketsViewerOutput("soccer")
 )
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   output$tennis <- renderBracketsViewer({
     bracketsViewer(
@@ -26,6 +31,21 @@ server <- function(input, output) {
   observe({
     print(input$tennis_match_click)
   })
+  
+  observe({
+    
+    grand_final <-     
+      list(
+        id = 6,
+        opponent1 = list(id = 1, score = 2, result = "win"),
+        opponent2 = list(id = 7, score = 1, result = "loss")
+      )
+    
+    updateBracketsViewer(inputId = "tennis", 
+                         session = session,
+                         match_data = grand_final)
+    
+  }) |> bindEvent(input$update_tennis_match)
   
 }
 

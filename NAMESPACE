@@ -3,4 +3,5 @@
 export(bracketsViewer)
 export(bracketsViewerOutput)
 export(renderBracketsViewer)
+export(updateBracketsViewer)
 import(htmlwidgets)

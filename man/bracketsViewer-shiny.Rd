@@ -6,7 +6,7 @@
 \alias{renderBracketsViewer}
 \title{Shiny bindings for bracketsViewer}
 \usage{
-bracketsViewerOutput(outputId, width = "100\%", height = "400px")
+bracketsViewerOutput(outputId, width = "100\%", height = "100\%")
 
 renderBracketsViewer(expr, env = parent.frame(), quoted = FALSE)
 }
