@@ -7,6 +7,7 @@ ui <- fluidPage(
   titlePanel("Bracket Viewer"),
   br(),
   actionButton("update_tennis_match", "Update Grand Final"),
+  actionButton("reset_tennis_match", "Reset Grand Final"),
   br(),
   br(),
   bracketsViewerOutput("tennis"),
@@ -46,6 +47,21 @@ server <- function(input, output, session) {
                          match_data = grand_final)
     
   }) |> bindEvent(input$update_tennis_match)
+  
+  observe({
+    
+    grand_final <-     
+      list(
+        id = 6,
+        opponent1 = list(id = 1),
+        opponent2 = list(id = 7)
+      )
+    
+    updateBracketsViewer(inputId = "tennis", 
+                         session = session,
+                         match_data = grand_final)
+    
+  }) |> bindEvent(input$reset_tennis_match)
   
 }
 
