@@ -4,7 +4,16 @@
 \alias{updateBracketsViewer}
 \title{Update bracketsViewer data}
 \usage{
-updateBracketsViewer(session, inputId, match_data)
+updateBracketsViewer(
+  inputId,
+  match_data,
+  session = shiny::getDefaultReactiveDomain()
+)
+}
+\arguments{
+\item{inputId}{The input id that the data should be updated for}
+
+\item{match_data}{The new data to use, a list containing the match data with the id}
 }
 \description{
 Update bracketsViewer data
