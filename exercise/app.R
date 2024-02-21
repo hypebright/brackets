@@ -53,8 +53,8 @@ server <- function(input, output, session) {
     grand_final <-     
       list(
         id = 6,
-        opponent1 = list(id = 1),
-        opponent2 = list(id = 7)
+        opponent1 = list(id = NA),
+        opponent2 = list(id = NA)
       )
     
     updateBracketsViewer(inputId = "tennis", 

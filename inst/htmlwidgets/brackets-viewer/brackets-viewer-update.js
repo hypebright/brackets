@@ -6,6 +6,66 @@ function updateMatch(elementId, match) {
   elementContainer.querySelectorAll(".match").forEach(element => {
     if (element.getAttribute("data-match-id") === match.id.toString()) {
       
+      const participant1 = element.querySelector(".participant:nth-of-type(1)");
+      if (participant1) {
+        // set data-participant-id
+        if (match.opponent1?.id) {
+          participant1.setAttribute("data-participant-id", match.opponent1?.id?.toString());
+          // find name beloning to id
+          bracketsViewer.participants.forEach(participant => {
+            if (participant.id === match.opponent1?.id) {
+              participant1.setAttribute("title", participant.name);
+              participant1.getElementsByClassName("name")[0].innerHTML = participant.name;
+            }
+          });
+        } else {
+          participant1.setAttribute("data-participant-id", "");
+          participant1.setAttribute("title", "");
+          participant1.getElementsByClassName("name")[0].innerHTML = "";
+        }    
+
+        // set win/loss
+        if (match.opponent1?.result === "win") {
+          participant1.classList.add("win");
+          participant1.classList.remove("loss");
+        } else if (match.opponent1?.result === "loss") {
+          participant1.classList.add("loss");
+          participant1.classList.remove("win");
+        } else {
+          participant1.classList.remove("win");
+          participant1.classList.remove("loss");
+        }
+      }
+      
+      const participant2 = element.querySelector(".participant:nth-of-type(2)");
+      if (participant2) {
+        if (match.opponent2?.id) {
+          participant2.setAttribute("data-participant-id", match.opponent2?.id?.toString());
+          // find name beloning to id
+          bracketsViewer.participants.forEach(participant => {
+            if (participant.id === match.opponent2?.id) {
+              participant2.setAttribute("title", participant.name);
+              participant2.getElementsByClassName("name")[0].innerHTML = participant.name;
+            }
+          });
+        } else {
+          participant2.setAttribute("data-participant-id", "");
+          participant2.setAttribute("title", "");
+          participant2.getElementsByClassName("name")[0].innerHTML = "";
+        }
+        // set win/loss
+        if (match.opponent2?.result === "win") {
+          participant2.classList.add("win");
+          participant2.classList.remove("loss");
+        } else if (match.opponent2?.result === "loss") {
+          participant2.classList.add("loss");
+          participant2.classList.remove("win");
+        } else {
+          participant2.classList.remove("win");
+          participant2.classList.remove("loss");
+        }
+      }
+      
       const result1 = element.querySelector(".participant:nth-of-type(1) .result");
       if (result1) {
         if (match.opponent1?.score) {
@@ -22,35 +82,6 @@ function updateMatch(elementId, match) {
         } else {
           result2.innerHTML = "-";
         }
-      }
-
-      const resultClass1 = element.querySelector(".participant:nth-of-type(1)");
-      if (resultClass1) {
-        if (match.opponent1?.result === "win") {
-          resultClass1.classList.add("win");
-          resultClass1.classList.remove("loss");
-        } else if (match.opponent1?.result === "loss") {
-          resultClass1.classList.add("loss");
-          resultClass1.classList.remove("win");
-        } else {
-          resultClass1.classList.remove("win");
-          resultClass1.classList.remove("loss");
-        }
-      }
-
-      const resultClass2 = element.querySelector(".participant:nth-of-type(2)");
-      if (resultClass2 && match.opponent2?.result) {
-        if (match.opponent2?.result === "win") {
-          resultClass2.classList.add("win");
-          resultClass2.classList.remove("loss");
-        } else if (match.opponent2?.result === "loss") {
-          resultClass2.classList.add("loss");
-          resultClass2.classList.remove("win");
-        } else {
-          resultClass2.classList.remove("win");
-          resultClass2.classList.remove("loss");
-        }
-        
       }
     }
   });

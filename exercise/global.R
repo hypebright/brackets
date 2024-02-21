@@ -106,8 +106,8 @@ tennis_data <- list(
       status = 0,
       # opponent1 = list(id = 1, score = 2, result = "win"),
       # opponent2 = list(id = 7, score = 1, result = "loss")
-      opponent1 = list(id = 1),
-      opponent2 = list(id = 7)
+      opponent1 = list(id = NA),
+      opponent2 = list(id = NA)
     )
   ),
   match_game = list()
