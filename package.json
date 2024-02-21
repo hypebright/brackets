@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "brackets-viewer": "^1.6.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1"
   }
 }
