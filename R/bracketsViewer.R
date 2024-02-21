@@ -89,3 +89,19 @@ bracketsViewer_html <- function(id, style, class, ...) {
     )
   )
 }
+
+#' Update bracketsViewer data
+#' @param inputId The input id that the data should be updated for
+#' @param match_data The new data to use, a list containing the match data with the id
+#' @export
+updateBracketsViewer <- function(inputId, 
+                                 match_data,
+                                 session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(
+    type = "updateBracketsViewer",
+    message = list(
+      id = inputId,
+      data = match_data
+    )
+  )
+}

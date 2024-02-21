@@ -5,4 +5,5 @@ dependencies:
    script:
      - brackets-viewer.min.js
      - stage-form-creator.min.js
+     - brackets-viewer-update.js
    stylesheet: brackets-viewer.min.css

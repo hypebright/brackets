@@ -104,8 +104,10 @@ tennis_data <- list(
       round_id = 2,
       child_count = 0,
       status = 0,
-      opponent1 = list(id = 1, score = 2, result = "win"),
-      opponent2 = list(id = 7, score = 1, result = "loss")
+      # opponent1 = list(id = 1, score = 2, result = "win"),
+      # opponent2 = list(id = 7, score = 1, result = "loss")
+      opponent1 = list(id = 1),
+      opponent2 = list(id = 7)
     )
   ),
   match_game = list()
