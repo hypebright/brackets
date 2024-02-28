@@ -4,7 +4,7 @@ library(shiny)
 source("global.R", local = TRUE)
 
 ui <- fluidPage(
-  titlePanel("Bracket Viewer"),
+  titlePanel("Brackets Viewer"),
   br(),
   actionButton("update_tennis_match", "Update Grand Final"),
   actionButton("reset_tennis_match", "Reset Grand Final"),
