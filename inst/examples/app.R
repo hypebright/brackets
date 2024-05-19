@@ -1,18 +1,26 @@
-
 library(shiny)
+library(bslib)
+library(brackets)
 
 source("global.R", local = TRUE)
 
-ui <- fluidPage(
-  titlePanel("Brackets Viewer"),
-  br(),
-  actionButton("update_tennis_match", "Update Grand Final"),
-  actionButton("reset_tennis_match", "Reset Grand Final"),
-  br(),
-  br(),
-  bracketsViewerOutput("tennis"),
-  br(),
-  bracketsViewerOutput("soccer")
+ui <- page_fluid(
+  navset_underline(
+    nav_panel(title = "Tennis",
+              br(),
+              br(),
+              actionButton("update_tennis_match", "Update Grand Final"),
+              actionButton("reset_tennis_match", "Reset Grand Final"),
+              br(),
+              br(),
+              bracketsViewerOutput("tennis")
+    ),
+    nav_panel(title = "Soccer",
+              br(),
+              br(),
+              bracketsViewerOutput("soccer")
+    )
+  )
 )
 
 server <- function(input, output, session) {
