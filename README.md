@@ -1,6 +1,6 @@
-# brackets
+# brackets <img src="man/figures/logo.png" width="200px" align="right"/>
 
-Wrapper around brackets-viewer.js: a simple library to display tournament brackets.
+> Wrapper around [brackets-viewer.js](https://github.com/Drarig29/brackets-viewer.js): a simple library to display tournament brackets. Display round-robin, single elimination and double elimination tournaments in R or Shiny.
 
 ## Installation
 
@@ -150,9 +150,11 @@ shinyApp(ui, server)
 
 ```
 
-## Reference
+## Acknowledgements
 
-Related documentation of the underlying brackets libraries:
+Thanks to [Corentin Girard](https://github.com/Drarig29) for creating the underlying `brackets` libraries.
+
+Related documentation:
 
 -   [brackets-docs](https://drarig29.github.io/brackets-docs/)
 -   [brackets-viewer.js](https://github.com/Drarig29/brackets-viewer.js?tab=readme-ov-file)
