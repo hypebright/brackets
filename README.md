@@ -147,7 +147,8 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$bracket <- renderBracketsViewer({
-    bracketsViewer(tennis_data)
+    bracketsViewer(tennis_data,
+                   roundWidth = 300)
   })
 }
 
