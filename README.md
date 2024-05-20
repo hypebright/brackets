@@ -2,6 +2,11 @@
 
 > Wrapper around [brackets-viewer.js](https://github.com/Drarig29/brackets-viewer.js): a simple library to display tournament brackets. Display round-robin, single elimination and double elimination tournaments in R or Shiny.
 
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R-CMD-check](https://github.com/hypebright/brackets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypebright/brackets/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 ## Installation
 
 You can install the package from GitHub:
