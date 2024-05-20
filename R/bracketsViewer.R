@@ -17,8 +17,11 @@
 #'  \code{opponent2}.
 #' }
 #' 
-#' @param data A list containing the tournaments brackets data, see description.
-#' @param roundWidth The width of the round column in pixels.
+#' @param data A list containing the tournaments brackets data, see description
+#' @param roundWidth The width of the round column in pixels
+#' @param width The width of the widget
+#' @param height The height of the widget
+#' @param elementId The id of the widget
 #' @import htmlwidgets
 #'
 #' @export
@@ -74,6 +77,7 @@ renderBracketsViewer <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 #' @keywords internal
+#' @importFrom htmltools tags
 bracketsViewer_html <- function(id, style, class, ...) {
   tags$div(
     id = id, 
@@ -95,6 +99,10 @@ bracketsViewer_html <- function(id, style, class, ...) {
 #' Update bracketsViewer data
 #' @param inputId The input id that the data should be updated for
 #' @param match_data The new data to use, a list containing the match data with the id
+#' @param session The Shiny session object
+#'
+#' @importFrom shiny getDefaultReactiveDomain 
+#' 
 #' @export
 updateBracketsViewer <- function(inputId, 
                                  match_data,

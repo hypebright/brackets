@@ -14,6 +14,8 @@ updateBracketsViewer(
 \item{inputId}{The input id that the data should be updated for}
 
 \item{match_data}{The new data to use, a list containing the match data with the id}
+
+\item{session}{The Shiny session object}
 }
 \description{
 Update bracketsViewer data

@@ -13,9 +13,15 @@ bracketsViewer(
 )
 }
 \arguments{
-\item{data}{A list containing the tournaments brackets data, see description.}
+\item{data}{A list containing the tournaments brackets data, see description}
 
-\item{roundWidth}{The width of the round column in pixels.}
+\item{roundWidth}{The width of the round column in pixels}
+
+\item{width}{The width of the widget}
+
+\item{height}{The height of the widget}
+
+\item{elementId}{The id of the widget}
 }
 \description{
 Visualize tournament brackets by providing data following the brackets-model
