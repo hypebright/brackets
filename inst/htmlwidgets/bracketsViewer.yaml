@@ -1,9 +1,9 @@
 dependencies:
- - name: bracket-viewer
+ - name: brackets-viewer
    version: 1.6.2
    src: htmlwidgets/brackets-viewer
    script:
      - brackets-viewer.min.js
      - stage-form-creator.min.js
-     - brackets-viewer-update.js
+     - brackets-viewer-update.min.js
    stylesheet: brackets-viewer.min.css

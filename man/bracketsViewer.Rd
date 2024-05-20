@@ -4,10 +4,18 @@
 \alias{bracketsViewer}
 \title{View tournament brackets}
 \usage{
-bracketsViewer(data, width = NULL, height = NULL, elementId = NULL)
+bracketsViewer(
+  data,
+  roundWidth = 150,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{data}{A list containing the tournaments brackets data, see description.}
+
+\item{roundWidth}{The width of the round column in pixels.}
 }
 \description{
 Visualize tournament brackets by providing data following the brackets-model

@@ -18,14 +18,16 @@
 #' }
 #' 
 #' @param data A list containing the tournaments brackets data, see description.
+#' @param roundWidth The width of the round column in pixels.
 #' @import htmlwidgets
 #'
 #' @export
-bracketsViewer <- function(data, width = NULL, height = NULL, elementId = NULL) {
+bracketsViewer <- function(data, roundWidth = 150, width = NULL, height = NULL, elementId = NULL) {
   
-  # forward options using x
+  # forward options
   opts = list(
-    data = data
+    data = data,
+    roundWidth = roundWidth
   )
   
   # create widget

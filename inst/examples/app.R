@@ -5,6 +5,13 @@ library(brackets)
 source("global.R", local = TRUE)
 
 ui <- page_fluid(
+  title = "Brackets Viewer",
+  theme = bs_theme(
+    primary = "#E69F00",
+    secondary = "#0072B2",
+    success = "#009E73",
+    base_font = font_google("Barlow Condensed")
+  ),
   navset_underline(
     nav_panel(title = "Tennis",
               br(),
@@ -27,7 +34,8 @@ server <- function(input, output, session) {
   
   output$tennis <- renderBracketsViewer({
     bracketsViewer(
-      data = tennis_data
+      data = tennis_data,
+      roundWidth = 300
     )
   })
   
