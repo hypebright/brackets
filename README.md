@@ -157,7 +157,7 @@ shinyApp(ui, server)
 
 ## CustomiZing WidgetZ course
 
-This package was developed during the [CustomiZing WidgetZ](https://athlyticz.com/shiny-iii). During this course you will learn everything about Shiny package development: from the basics of HTML, CSS, and JavaScript to the intricacies of Shiny's JavaScript API. You will learn how to create custom Shiny inputs and outputs, and how to build any widget you can possibly imagine. You will also learn about [{htmlwidgets}](https://www.htmlwidgets.org), which is the foundation of the {brackets} package.
+This package was developed during the [CustomiZing WidgetZ](https://athlyticz.com/shiny-iii) course. During this course you will learn everything about Shiny package development: from the basics of HTML, CSS, and JavaScript to the way Shiny builds the UI and deals with dependencies. You will learn how to create custom Shiny inputs and outputs, and how to build any widget you can possibly imagine. You will also learn about [{htmlwidgets}](https://www.htmlwidgets.org), which is the foundation of the {brackets} package.
 
 [<img src="man/figures/athlyticz.png">](https://athlyticz.com/shiny-iii)
 
