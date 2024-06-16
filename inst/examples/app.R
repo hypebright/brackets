@@ -20,12 +20,16 @@ ui <- page_fluid(
               actionButton("reset_tennis_match", "Reset Grand Final"),
               br(),
               br(),
-              bracketsViewerOutput("tennis")
+              bracketsViewerOutput("tennis"),
+              br(),
+              textOutput("clicked_match")
     ),
     nav_panel(title = "Soccer",
               br(),
               br(),
-              bracketsViewerOutput("soccer")
+              bracketsViewerOutput("soccer"),
+              br(),
+              textOutput("clicked_match2")
     )
   )
 )
@@ -41,12 +45,16 @@ server <- function(input, output, session) {
   
   output$soccer <- renderBracketsViewer({
     bracketsViewer(
-      data = soccer_data
+      data = soccer_data_advanced
     )
   })
   
-  observe({
-    print(input$tennis_match_click)
+  output$clicked_match <- renderText({
+    input$tennis_match_click
+  })
+  
+  output$clicked_match2 <- renderText({
+    input$soccer_match_click
   })
   
   observe({
