@@ -156,6 +156,8 @@ shinyApp(ui, server)
 
 ```
 
+You can find more extensive examples in the [example Shiny app](https://github.com/hypebright/brackets/tree/main/inst/examples).
+
 ## CustomiZing WidgetZ course
 
 This package was developed during the [CustomiZing WidgetZ](https://athlyticz.com/shiny-iii) course. During this course you will learn everything about Shiny package development: from the basics of HTML, CSS, and JavaScript to the way Shiny builds the UI and deals with dependencies. You will learn how to create custom Shiny inputs and outputs, and how to build any widget you can possibly imagine. You will also learn about [{htmlwidgets}](https://www.htmlwidgets.org), which is the foundation of the {brackets} package.
