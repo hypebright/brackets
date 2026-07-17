@@ -29,7 +29,8 @@ schema. The data should be a list with the following fields:
 \itemize{
 \item \code{participant} A list of participants, each participant should be
 a list with the following fields: \code{id}, \code{tournament_id},
-\code{name}.
+\code{name}. An optional \code{image} field (a URL) can be added to show
+a logo, flag or photo next to the participant's name.
 \item \code{stage} A list of stages, each stage should be a list with the
 following fields: \code{id}, \code{tournament_id}, \code{name}, \code{type},
 \code{number}, \code{settings}.

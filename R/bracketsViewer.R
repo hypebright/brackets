@@ -5,7 +5,8 @@
 #' \itemize{
 #'  \item \code{participant} A list of participants, each participant should be
 #'  a list with the following fields: \code{id}, \code{tournament_id},
-#'  \code{name}.
+#'  \code{name}. An optional \code{image} field (a URL) can be added to show
+#'  a logo, flag or photo next to the participant's name.
 #'  \item \code{stage} A list of stages, each stage should be a list with the
 #'  following fields: \code{id}, \code{tournament_id}, \code{name}, \code{type},
 #'  \code{number}, \code{settings}.
@@ -26,13 +27,14 @@
 #'
 #' @export
 bracketsViewer <- function(data, roundWidth = 150, width = NULL, height = NULL, elementId = NULL) {
-  
+
   # forward options
   opts = list(
     data = data,
-    roundWidth = roundWidth
+    roundWidth = roundWidth,
+    participantImages = participant_images(data$participant)
   )
-  
+
   # create widget
   htmlwidgets::createWidget(
     name = 'bracketsViewer',
@@ -74,6 +76,14 @@ bracketsViewerOutput <- function(outputId, width = '100%', height = '100%'){
 renderBracketsViewer <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, bracketsViewerOutput, env, quoted = TRUE)
+}
+
+#' Reshape participants with an image field into brackets-viewer.js's
+#' participantId/imageUrl pairs
+#' @noRd
+participant_images <- function(participants) {
+  with_image <- Filter(function(p) !is.null(p$image), participants)
+  lapply(with_image, function(p) list(participantId = p$id, imageUrl = p$image))
 }
 
 #' @keywords internal

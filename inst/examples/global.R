@@ -1,14 +1,14 @@
 # Single elimination tournament data
 tennis_data <- list(
   participant = list(
-    list(id = 0, tournament_id = 0, name = "🇱🇻 Jelena Ostapenko"),
-    list(id = 1, tournament_id = 0, name = "🇺🇸 Coco Gauff"),
-    list(id = 2, tournament_id = 0, name = "🇷🇴 Sorana Cirstea"),
-    list(id = 3, tournament_id = 0, name = "🇨🇿 Karolina Muchova"),
-    list(id = 4, tournament_id = 0, name = "🇨🇿 Marketa Vondrousova"),
-    list(id = 5, tournament_id = 0, name = "🇺🇸 Madison Keys"),
-    list(id = 6, tournament_id = 0, name = "🇨🇳 Zheng Qinwen"),
-    list(id = 7, tournament_id = 0, name = "🇧🇾 Aryna Sabalenka")
+    list(id = 0, tournament_id = 0, name = "Jelena Ostapenko", image = "https://flagcdn.com/w80/lv.png"),
+    list(id = 1, tournament_id = 0, name = "Coco Gauff", image = "https://flagcdn.com/w80/us.png"),
+    list(id = 2, tournament_id = 0, name = "Sorana Cirstea", image = "https://flagcdn.com/w80/ro.png"),
+    list(id = 3, tournament_id = 0, name = "Karolina Muchova", image = "https://flagcdn.com/w80/cz.png"),
+    list(id = 4, tournament_id = 0, name = "Marketa Vondrousova", image = "https://flagcdn.com/w80/cz.png"),
+    list(id = 5, tournament_id = 0, name = "Madison Keys", image = "https://flagcdn.com/w80/us.png"),
+    list(id = 6, tournament_id = 0, name = "Zheng Qinwen", image = "https://flagcdn.com/w80/cn.png"),
+    list(id = 7, tournament_id = 0, name = "Aryna Sabalenka", image = "https://flagcdn.com/w80/by.png")
   ),
   stage = list(
     list(

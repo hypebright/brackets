@@ -9,7 +9,9 @@ HTMLWidgets.widget({
     
     return {
       renderValue: function(opts) {
-        
+
+        window.bracketsViewer.setParticipantImages(opts.participantImages || []);
+
         window.bracketsViewer.render(
           {
             stages: opts.data.stage,
