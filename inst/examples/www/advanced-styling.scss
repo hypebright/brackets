@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&display=swap');
+
+$zoom-btn-bg: #0072B2;
+$zoom-btn-hover: #005a8c;
+
+.brackets-viewer {
+  font-family: 'Barlow Condensed', sans-serif;
+  // set here (rather than via theme) so it survives the dark/light toggle:
+  // updateBracketsViewer(theme = ...) swaps in a whole new preset, it
+  // doesn't merge with whatever theme was set at creation time.
+  --participant-image-size: 28px;
+
+  h1, h2, h3 {
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  // the tightly-fit visual card is .opponents, not .match: .match is the
+  // flex slot that also carries connector-alignment spacing between rounds,
+  // so shadows/hover on .match itself look oversized past round 1.
+  .opponents {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  // a fixed brand color rather than a translucent white: white-on-white
+  // is invisible in light mode, and this way the border reads the same in
+  // both light and dark instead of depending on theme.
+  .participant .name img {
+    border-radius: 50%;
+    border: 2px solid $zoom-btn-bg;
+  }
+}
+
+.brackets-viewer-zoom-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: $zoom-btn-bg;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    background: $zoom-btn-hover;
+    transform: scale(1.08);
+  }
+
+  & + & {
+    margin-left: 6px;
+  }
+}

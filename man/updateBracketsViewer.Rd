@@ -20,7 +20,7 @@ match data with the id. Leave as \code{NULL} to update the theme only.}
 \item{theme}{Optional theme to switch to, using the same values accepted
 by the \code{theme} argument of \code{\link{bracketsViewer}}. Leave as
 \code{NULL} to leave the current theme untouched, or pass \code{"default"}
-to explicitly reset to the library's built-in look.}
+to explicitly reset to brackets-viewer.js's own built-in look.}
 
 \item{session}{The Shiny session object}
 }

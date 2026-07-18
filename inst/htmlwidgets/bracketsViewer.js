@@ -26,6 +26,39 @@ function applyTheme(elementId, theme) {
   if (!styleTag) document.head.appendChild(tag);
 }
 
+// Writes opts.customCSS (a raw CSS string from R, either typed directly or
+// read from a .css/.scss file) as its own <style> block, scoped to this
+// widget's outer container (containerId), and appended after the theme
+// block so it loads last and can override anything theme doesn't cover.
+// The container, rather than the inner .brackets-viewer div, is used as the
+// scope root so the zoom buttons (siblings of .brackets-viewer, not
+// descendants of it) are covered too. Scoping matters because, unlike
+// theme's CSS variables (which only reach descendants of the element they're
+// set on through normal inheritance), a plain selector like .opponents or h3
+// would otherwise match every bracketsViewer() on the page, not just this
+// one.
+function applyCustomCSS(containerId, css) {
+  const styleTag = document.getElementById(containerId + "-custom-css");
+
+  if (!css) {
+    if (styleTag) styleTag.remove();
+    return;
+  }
+
+  // @import has to come before any other rule in a stylesheet, so it can't
+  // live inside @scope; pull it out and keep it at the top level instead.
+  const imports = [];
+  const rest = css.replace(/@import[^;]+;/g, function(match) {
+    imports.push(match);
+    return "";
+  });
+
+  const tag = styleTag || document.createElement("style");
+  tag.id = containerId + "-custom-css";
+  tag.textContent = imports.join("\n") + "\n@scope (#" + containerId + ") {\n" + rest + "\n}";
+  if (!styleTag) document.head.appendChild(tag);
+}
+
 HTMLWidgets.widget({
   name: "bracketsViewer",
 
@@ -39,6 +72,7 @@ HTMLWidgets.widget({
       renderValue: function(opts) {
 
         applyTheme(elementId, opts.theme);
+        applyCustomCSS(el.id, opts.customCSS);
 
         window.bracketsViewer.setParticipantImages(opts.participantImages || []);
 

@@ -31,22 +31,37 @@
 #'   \code{matchWidth}, \code{matchHorizontalPadding},
 #'   \code{matchVerticalPadding}, \code{connectorBorderWidth},
 #'   \code{matchBorderWidth}, \code{matchBorderRadius},
-#'   \code{participantImageSize}. Defaults to \code{NULL}, the library's
-#'   built-in look.
+#'   \code{participantImageSize}. Defaults to \code{NULL}, brackets-viewer.js's
+#'   own built-in look.
+#' @param customCSS Optional escape hatch for styling beyond \code{theme}:
+#'   a raw CSS string, or a path to a \code{.css}/\code{.scss} file (compiled
+#'   with \pkg{sass}). A file path that doesn't exist as given is also looked
+#'   up under \code{www/}, so inside a Shiny app you can just name a file you
+#'   already ship in its \code{www} folder, e.g. \code{customCSS =
+#'   "styles.scss"}. Loaded after brackets-viewer.js's own stylesheet and
+#'   after \code{theme}, so it can override anything they don't cover (fonts,
+#'   hover states, the zoom buttons' appearance, image shape/size, etc.).
+#'   Automatically scoped (with the CSS \code{@@scope} at-rule) to this
+#'   widget, so a plain selector like \code{.opponents} or \code{h3} only
+#'   affects this bracket, not other \code{bracketsViewer()}s on the same
+#'   page, nor the rest of the page. This relies on browser support for
+#'   \code{@@scope} (all current major browsers); in an unsupported browser
+#'   \code{customCSS} is simply skipped rather than leaking.
 #' @param width The width of the widget
 #' @param height The height of the widget
 #' @param elementId The id of the widget
 #' @import htmlwidgets
 #'
 #' @export
-bracketsViewer <- function(data, roundWidth = 150, theme = NULL, width = NULL, height = NULL, elementId = NULL) {
+bracketsViewer <- function(data, roundWidth = 150, theme = NULL, customCSS = NULL, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options
   opts = list(
     data = data,
     roundWidth = roundWidth,
     participantImages = participant_images(data$participant),
-    theme = resolve_theme(theme)
+    theme = resolve_theme(theme),
+    customCSS = resolve_custom_css(customCSS)
   )
 
   # create widget
@@ -109,8 +124,16 @@ bracketsViewer_html <- function(id, style, class, ...) {
     class = class,
     tags$div(
       style = "position: absolute; z-index: 1;",
-      tags$button(id = paste0(id, "-brackets-viewer-zoom-in"), "+"),
-      tags$button(id = paste0(id, "-brackets-viewer-zoom-out"), "-")
+      tags$button(
+        id = paste0(id, "-brackets-viewer-zoom-in"),
+        class = "brackets-viewer-zoom-btn brackets-viewer-zoom-in",
+        "+"
+      ),
+      tags$button(
+        id = paste0(id, "-brackets-viewer-zoom-out"),
+        class = "brackets-viewer-zoom-btn brackets-viewer-zoom-out",
+        "-"
+      )
     ),
     tags$div(
       id = paste0(id, "-brackets-viewer"),
@@ -127,7 +150,7 @@ bracketsViewer_html <- function(id, style, class, ...) {
 #' @param theme Optional theme to switch to, using the same values accepted
 #'   by the \code{theme} argument of \code{\link{bracketsViewer}}. Leave as
 #'   \code{NULL} to leave the current theme untouched, or pass \code{"default"}
-#'   to explicitly reset to the library's built-in look.
+#'   to explicitly reset to brackets-viewer.js's own built-in look.
 #' @param session The Shiny session object
 #'
 #' @importFrom shiny getDefaultReactiveDomain

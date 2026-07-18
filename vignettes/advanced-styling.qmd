@@ -1,0 +1,344 @@
+---
+title: "Advanced styling"
+vignette: >
+  %\VignetteIndexEntry{Advanced styling}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup}
+library(brackets)
+```
+
+`bracketsViewer()` looks fine out of the box, but you'll usually want it to match your own document or Shiny app. There are three ways to change how it looks, and they stack on top of each other:
+
+1. **`theme`**: pick a built-in preset, or hand it a list of CSS variables to override.
+2. **`customCSS`**: a raw CSS string, or a path to a `.css`/`.scss` file, for anything `theme` can't do.
+3. Under the hood, both of those just set plain CSS variables that `brackets-viewer.js` (the JavaScript library this package wraps) already understands. `theme` is really just a friendly shortcut for setting those.
+
+The order they load in matters: the brackets-viewer.js stylesheet loads first, `theme` overrides parts of it, and `customCSS` loads last, so it wins if anything conflicts.
+
+Here's a small single-elimination bracket to style throughout this vignette:
+
+```{r}
+minimal_data <- list(
+  participant = list(
+    list(
+      id = 0,
+      tournament_id = 0,
+      name = "Alpha",
+      image = "https://i.pravatar.cc/64?u=alpha"
+    ),
+    list(
+      id = 1,
+      tournament_id = 0,
+      name = "Bravo",
+      image = "https://i.pravatar.cc/64?u=bravo"
+    ),
+    list(
+      id = 2,
+      tournament_id = 0,
+      name = "Charlie",
+      image = "https://i.pravatar.cc/64?u=charlie"
+    ),
+    list(
+      id = 3,
+      tournament_id = 0,
+      name = "Delta",
+      image = "https://i.pravatar.cc/64?u=delta"
+    )
+  ),
+  stage = list(
+    list(
+      id = 0,
+      tournament_id = 0,
+      name = "Semifinals",
+      type = "single_elimination",
+      number = 1,
+      settings = list(
+        size = 4,
+        seedOrdering = list("natural"),
+        grandFinal = "simple",
+        matchesChildCount = 0
+      )
+    )
+  ),
+  round = list(
+    list(id = 0, number = 1, stage_id = 0, group_id = 0),
+    list(id = 1, number = 2, stage_id = 0, group_id = 0)
+  ),
+  match = list(
+    list(
+      id = 0,
+      number = 1,
+      stage_id = 0,
+      group_id = 0,
+      round_id = 0,
+      child_count = 0,
+      status = 4,
+      opponent1 = list(id = 0, score = 2, result = "win"),
+      opponent2 = list(id = 1, score = 1, result = "loss")
+    ),
+    list(
+      id = 1,
+      number = 2,
+      stage_id = 0,
+      group_id = 0,
+      round_id = 0,
+      child_count = 0,
+      status = 4,
+      opponent1 = list(id = 2, score = 0, result = "loss"),
+      opponent2 = list(id = 3, score = 3, result = "win")
+    ),
+    list(
+      id = 2,
+      number = 1,
+      stage_id = 0,
+      group_id = 0,
+      round_id = 1,
+      child_count = 0,
+      status = 0,
+      opponent1 = list(id = NA),
+      opponent2 = list(id = NA)
+    )
+  ),
+  match_game = list()
+)
+
+bracketsViewer(minimal_data)
+```
+
+## Built-in themes
+
+```{r}
+bracketsViewer(minimal_data, theme = "dark")
+```
+
+Currently there are two themes support: "default" (which is, yes, the default), and "dark".
+
+## Writing your own theme
+
+A theme is just a named list of CSS variables, written in camelCase. Leave any variable out and it falls back to brackets-viewer.js's own default:
+
+```{r}
+bracketsViewer(
+  minimal_data,
+  theme = list(
+    primaryBackground = "#0b1d3a",
+    matchBackground = "#132b52",
+    fontColor = "#e8eefc",
+    winColor = "#f4b400",
+    borderColor = "#24447f"
+  )
+)
+```
+
+## The `customCSS` escape hatch
+
+`theme` only covers the variables `brackets-viewer.js` exposes, things like
+colors and sizes. For anything else (fonts, shadows, hover effects, the zoom
+buttons, image shape), you can pass `customCSS` instead. `customCSS` can be either a raw CSS string or a the path to a `.css`/`.scss` file:
+
+```{r}
+custom_css <- "
+.brackets-viewer .opponents {
+  border-radius: 0px;
+}
+"
+
+bracketsViewer(minimal_data, customCSS = custom_css)
+```
+
+```r
+# or from a file
+bracketsViewer(minimal_data, customCSS = "path/to/my-styles.css")
+
+# .scss files work too, they're compiled with the sass package
+bracketsViewer(minimal_data, customCSS = "path/to/my-styles.scss")
+
+# inside a Shiny app, a bare filename is also looked up under www/, no need
+# to spell out the www/ prefix yourself, same as any other www asset
+bracketsViewer(minimal_data, customCSS = "my-styles.scss")
+```
+
+A couple of tips for writing that CSS:
+
+- You don't need to scope selectors to a specific widget yourself. `customCSS` is automatically scoped to the bracket it was passed to (using the CSS `@scope` at-rule), so a plain selector like `.opponents` or `h3` only affects that one bracket, not other `bracketsViewer()`s on the same page, and not the rest of your app either.
+- The element that actually *looks* like a match card is `.opponents`, not `.match`. `.match` is just the layout box brackets-viewer.js uses to line up the connector lines between rounds, so from round 2 onward it's taller than the text inside it. Put a shadow or border on `.match` and you'll get a card with a lot of empty space in it. `.opponents` is the element that's actually sized to fit its content, and it's also what brackets-viewer.js already puts a border, background, and corner radius on. That's the one you want for card-like effects.
+
+## Cookbook
+
+A few concrete things `theme` can't do on its own, but `customCSS` can.
+
+### Custom fonts
+
+```{r}
+font_css <- "
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap');
+
+.brackets-viewer {
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.brackets-viewer h1, .brackets-viewer h2, .brackets-viewer h3 {
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+"
+
+bracketsViewer(minimal_data, theme = "dark", customCSS = font_css)
+```
+
+### Round header background
+
+The grey banner above each round ("Round 1", "Final round", ...) is an `h3`. Its background is already one of the `theme` variables, `secondaryBackground`, so most of the time you don't need `customCSS` for this at all:
+
+```{r}
+bracketsViewer(
+  minimal_data,
+  theme = list(secondaryBackground = "#0b1d3a", fontColor = "#e8eefc")
+)
+```
+
+Font size, padding and text transforms aren't exposed as variables though, so those still need `customCSS`, targeting `.brackets-viewer h3` directly:
+
+```{r}
+round_header_css <- "
+.brackets-viewer h3 {
+  border-radius: 2px;
+  font-size: 1.2em;
+  letter-spacing: 0.2em;
+}
+"
+
+bracketsViewer(
+  minimal_data,
+  theme = list(secondaryBackground = "#0b1d3a", fontColor = "#e8eefc"),
+  customCSS = round_header_css
+)
+```
+
+### Match card shadows and hover lift
+
+As explained above, target `.opponents` here, not `.match`:
+
+```{r}
+shadow_css <- "
+.brackets-viewer .opponents {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.brackets-viewer .opponents:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+"
+
+bracketsViewer(minimal_data, theme = "dark", customCSS = shadow_css)
+```
+
+### Prettier zoom buttons
+
+The zoom in/out buttons carry a `brackets-viewer-zoom-btn` class, plus `brackets-viewer-zoom-in` / `brackets-viewer-zoom-out` individually:
+
+```{r}
+zoom_css <- "
+.brackets-viewer-zoom-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #1e2a44;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.brackets-viewer-zoom-btn:hover {
+  background: #2c3d63;
+  transform: scale(1.08);
+}
+
+.brackets-viewer-zoom-btn + .brackets-viewer-zoom-btn {
+  margin-left: 6px;
+}
+"
+
+bracketsViewer(minimal_data, theme = "dark", customCSS = zoom_css)
+```
+
+### Rounder, larger participant images
+
+If participants have an `image` (a photo, logo or flag), its size is one of the `theme` variables: `participantImageSize`. It defaults to `1em` (so it scales with `textSize`), but you can set it to any CSS size:
+
+```{r}
+bracketsViewer(minimal_data, theme = list(participantImageSize = "2em"))
+```
+
+Size is covered by `theme`, but shape isn't. For that, you still need `customCSS`:
+
+```{r}
+image_css <- "
+.brackets-viewer .participant .name img {
+  border-radius: 50%;
+  border: 2px solid #0072B2;
+}
+"
+
+bracketsViewer(
+  minimal_data,
+  theme = list(participantImageSize = "2em"),
+  customCSS = image_css
+)
+```
+
+## Building on a built-in preset
+
+`theme` only takes one preset name *or* one list of overrides, never both at once, so `theme = list(participantImageSize = "2em")` on its own doesn't also give you the dark colors. If you want dark plus some tweaks, take the preset's own list with `bracket_theme()` and layer your changes on top with base R's `modifyList()`:
+
+```{r}
+bracketsViewer(
+  minimal_data,
+  theme = modifyList(bracket_theme("dark"), list(participantImageSize = "2em"))
+)
+```
+
+One thing worth knowing if you ever switch themes while your Shiny app is running with `updateBracketsViewer()` (see below): it swaps in a whole new theme, it doesn't merge with whatever was set before. So even with `modifyList()`, if you set `participantImageSize` through `theme` at creation time, it'll quietly reset the moment someone flips a light/dark toggle, unless you remember to include it every time you call `updateBracketsViewer()` too. If a setting needs to survive without you explicitly handling, set the CSS variable directly through `customCSS` instead, for example `.brackets-viewer { --participant-image-size: 28px; }`. `customCSS` is only sent once, when the widget is created, and never gets touched again.
+
+## Combining everything
+
+These all stack, so a real app typically ships one `customCSS` block per bracket that combines several of the snippets above:
+
+```{r}
+advanced_css <- paste(font_css, shadow_css, zoom_css, image_css, sep = "\n")
+
+bracketsViewer(minimal_data, theme = "dark", customCSS = advanced_css)
+```
+
+Once you've got more than a handful of rules,it's recommended to use a file instead. In a Shiny app, put a `.scss` file into `www/` and just reference it by name. `bracketsViewer()` looks in `www/` whenever the path you gave it doesn't
+already exist:
+
+```r
+# inst/examples/www/advanced-styling.scss holds the rules above, written as
+# actual Sass (with variables, nesting and `&`) instead of one long string
+bracketsViewer(soccer_data, theme = "dark", customCSS = "advanced-styling.scss")
+```
+
+## Switching themes live
+
+`updateBracketsViewer()` can switch `theme` at runtime, which is handy for wiring up a dark/light toggle for a bracket that's already on screen:
+
+```r
+observe({
+  updateBracketsViewer(
+    inputId = "my_bracket",
+    theme = if (input$dark_mode == "dark") "dark" else "default"
+  )
+}) |> bindEvent(input$dark_mode, ignoreInit = TRUE)
+```
+
+`customCSS` isn't part of this. It's set once, when the widget is created, and is meant to be a static styling layer rather than something you want to change dynamically.

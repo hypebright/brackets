@@ -2,16 +2,23 @@ Package: brackets
 Title: Display Tournament Brackets
 Version: 0.1.0
 Authors@R: 
-    person("Veerle", "van Leemput", , "veerle@hypebright.nl", role = c("aut", "cre"))
+    person("Veerle", "Eeftink - van Leemput", , "veerle@hypebright.nl", role = c("aut", "cre"))
 Maintainer: Veerle van Leemput <veerle@hypebright.nl>
-Description: Display HTML tournament brackets (round-robin, single elimination, double elimination)
-    of any length at any stage of its lifetime. The data needed follows the opinionated 
-    brackets-model data structure.
+Description: Display HTML tournament brackets (round-robin, single
+    elimination, double elimination) of any length at any stage of its
+    lifetime. The data needed follows the opinionated brackets-model data
+    structure.
 License: MIT + file LICENSE
 Imports:
-    htmlwidgets,
     htmltools,
+    htmlwidgets,
+    sass,
     shiny
+Suggests:
+    knitr,
+    quarto
+VignetteBuilder: 
+    quarto
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

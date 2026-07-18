@@ -8,6 +8,7 @@ bracketsViewer(
   data,
   roundWidth = 150,
   theme = NULL,
+  customCSS = NULL,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -29,8 +30,23 @@ using camelCase names, e.g. \code{list(winColor = "#4caf50", matchWidth =
 \code{matchWidth}, \code{matchHorizontalPadding},
 \code{matchVerticalPadding}, \code{connectorBorderWidth},
 \code{matchBorderWidth}, \code{matchBorderRadius},
-\code{participantImageSize}. Defaults to \code{NULL}, the library's
-built-in look.}
+\code{participantImageSize}. Defaults to \code{NULL}, brackets-viewer.js's
+own built-in look.}
+
+\item{customCSS}{Optional escape hatch for styling beyond \code{theme}:
+a raw CSS string, or a path to a \code{.css}/\code{.scss} file (compiled
+with \pkg{sass}). A file path that doesn't exist as given is also looked
+up under \code{www/}, so inside a Shiny app you can just name a file you
+already ship in its \code{www} folder, e.g. \code{customCSS =
+  "styles.scss"}. Loaded after brackets-viewer.js's own stylesheet and
+after \code{theme}, so it can override anything they don't cover (fonts,
+hover states, the zoom buttons' appearance, image shape/size, etc.).
+Automatically scoped (with the CSS \code{@scope} at-rule) to this
+widget, so a plain selector like \code{.opponents} or \code{h3} only
+affects this bracket, not other \code{bracketsViewer()}s on the same
+page, nor the rest of the page. This relies on browser support for
+\code{@scope} (all current major browsers); in an unsupported browser
+\code{customCSS} is simply skipped rather than leaking.}
 
 \item{width}{The width of the widget}
 

@@ -1,3 +1,10 @@
+# Shared customCSS applied to every bracketsViewer() in app.R: a condensed
+# display font, card shadows with a hover lift, styled zoom buttons, and
+# rounded/bordered participant images (flags/photos). Ships as
+# www/advanced-styling.scss; naming it bare like this lets bracketsViewer()
+# find it under the app's www folder automatically.
+advanced_bracket_css <- "advanced-styling.scss"
+
 # Single elimination tournament data
 tennis_data <- list(
   participant = list(

@@ -40,13 +40,15 @@ server <- function(input, output, session) {
   output$tennis <- renderBracketsViewer({
     bracketsViewer(
       data = tennis_data,
-      roundWidth = 300
+      roundWidth = 300,
+      customCSS = advanced_bracket_css
     )
   })
 
   output$soccer <- renderBracketsViewer({
     bracketsViewer(
-      data = soccer_data_advanced
+      data = soccer_data_advanced,
+      customCSS = advanced_bracket_css
     )
   })
 
