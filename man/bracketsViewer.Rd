@@ -19,7 +19,7 @@ bracketsViewer(
 \item{roundWidth}{The width of the round column in pixels}
 
 \item{theme}{Optional visual theme: either the name of a built-in theme
-(currently \code{"dark"}), or a named list of CSS variable overrides
+(\code{"default"} or \code{"dark"}), or a named list of CSS variable overrides
 using camelCase names, e.g. \code{list(winColor = "#4caf50", matchWidth =
   "180px")}. Overridable variables: \code{primaryBackground},
 \code{secondaryBackground}, \code{matchBackground}, \code{fontColor},

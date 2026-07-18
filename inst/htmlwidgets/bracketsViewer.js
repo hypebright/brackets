@@ -1,3 +1,31 @@
+// Writes theme (a named list of camelCase CSS variables from R, e.g.
+// winColor) as a scoped <style> block overriding brackets-viewer.js's
+// --kebab-case custom properties for the widget instance identified by
+// elementId. Removes the block when no theme is set, so it can also be used
+// to clear a previously applied theme. Declared at top level (rather than
+// inside the widget factory below) so updateBracketsViewer's Shiny message
+// handler (brackets-viewer-update.js) can call it too.
+function applyTheme(elementId, theme) {
+  const styleTag = document.getElementById(elementId + "-theme");
+
+  if (!theme || Object.keys(theme).length === 0) {
+    if (styleTag) styleTag.remove();
+    return;
+  }
+
+  const properties = Object.keys(theme)
+    .map(function(key) {
+      const cssVar = key.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+      return "--" + cssVar + ": " + theme[key] + ";";
+    })
+    .join(" ");
+
+  const tag = styleTag || document.createElement("style");
+  tag.id = elementId + "-theme";
+  tag.textContent = "#" + elementId + " { " + properties + " }";
+  if (!styleTag) document.head.appendChild(tag);
+}
+
 HTMLWidgets.widget({
   name: "bracketsViewer",
 
@@ -7,35 +35,10 @@ HTMLWidgets.widget({
     var scale = 1;
     const elementId = el.id + "-brackets-viewer";
 
-    // Writes opts.theme (a named list of camelCase CSS variables from R, e.g.
-    // winColor) as a scoped <style> block overriding brackets-viewer.js's
-    // --kebab-case custom properties for this widget instance only. Removes
-    // the block when no theme is set, so a later render can clear a theme.
-    function applyTheme(theme) {
-      const styleTag = document.getElementById(elementId + "-theme");
-
-      if (!theme || Object.keys(theme).length === 0) {
-        if (styleTag) styleTag.remove();
-        return;
-      }
-
-      const properties = Object.keys(theme)
-        .map(function(key) {
-          const cssVar = key.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-          return "--" + cssVar + ": " + theme[key] + ";";
-        })
-        .join(" ");
-
-      const tag = styleTag || document.createElement("style");
-      tag.id = elementId + "-theme";
-      tag.textContent = "#" + elementId + " { " + properties + " }";
-      if (!styleTag) document.head.appendChild(tag);
-    }
-
     return {
       renderValue: function(opts) {
 
-        applyTheme(opts.theme);
+        applyTheme(elementId, opts.theme);
 
         window.bracketsViewer.setParticipantImages(opts.participantImages || []);
 

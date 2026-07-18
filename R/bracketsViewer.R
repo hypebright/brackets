@@ -21,7 +21,7 @@
 #' @param data A list containing the tournaments brackets data, see description
 #' @param roundWidth The width of the round column in pixels
 #' @param theme Optional visual theme: either the name of a built-in theme
-#'   (currently \code{"dark"}), or a named list of CSS variable overrides
+#'   (\code{"default"} or \code{"dark"}), or a named list of CSS variable overrides
 #'   using camelCase names, e.g. \code{list(winColor = "#4caf50", matchWidth =
 #'   "180px")}. Overridable variables: \code{primaryBackground},
 #'   \code{secondaryBackground}, \code{matchBackground}, \code{fontColor},
@@ -120,22 +120,29 @@ bracketsViewer_html <- function(id, style, class, ...) {
   )
 }
 
-#' Update bracketsViewer data
+#' Update bracketsViewer data and/or theme
 #' @param inputId The input id that the data should be updated for
-#' @param match_data The new data to use, a list containing the match data with the id
+#' @param match_data Optional new match data to apply, a list containing the
+#'   match data with the id. Leave as \code{NULL} to update the theme only.
+#' @param theme Optional theme to switch to, using the same values accepted
+#'   by the \code{theme} argument of \code{\link{bracketsViewer}}. Leave as
+#'   \code{NULL} to leave the current theme untouched, or pass \code{"default"}
+#'   to explicitly reset to the library's built-in look.
 #' @param session The Shiny session object
 #'
-#' @importFrom shiny getDefaultReactiveDomain 
-#' 
+#' @importFrom shiny getDefaultReactiveDomain
+#'
 #' @export
-updateBracketsViewer <- function(inputId, 
-                                 match_data,
+updateBracketsViewer <- function(inputId,
+                                 match_data = NULL,
+                                 theme = NULL,
                                  session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = "updateBracketsViewer",
     message = list(
       id = inputId,
-      data = match_data
+      data = match_data,
+      theme = resolve_theme(theme)
     )
   )
 }

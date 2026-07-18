@@ -51,6 +51,8 @@ function updateMatch(elementId, match) {
 // add Shiny custom message handler
 if(HTMLWidgets.shinyMode) {
     Shiny.addCustomMessageHandler("updateBracketsViewer", function(message) {
-    updateMatch(message.id + "-brackets-viewer", message.data);
+    const elementId = message.id + "-brackets-viewer";
+    if (message.data) updateMatch(elementId, message.data);
+    if (message.theme) applyTheme(elementId, message.theme);
   });
 }

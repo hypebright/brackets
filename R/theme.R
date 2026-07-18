@@ -1,7 +1,12 @@
 # Built-in colour presets for bracketsViewer(). Names are camelCase versions
 # of the CSS custom properties brackets-viewer.js exposes (winColor becomes
 # --win-color), so they can be merged with user-supplied overrides.
+#
+# "default" (no overrides) is kept distinct from resolve_theme(NULL): NULL
+# means "leave the theme untouched" in updateBracketsViewer(), while
+# "default" explicitly resets to the library's built-in look.
 bracket_themes <- list(
+  default = list(),
   dark = list(
     primaryBackground = "#1e1e1e",
     secondaryBackground = "#2a2a2a",

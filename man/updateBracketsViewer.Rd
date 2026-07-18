@@ -2,21 +2,28 @@
 % Please edit documentation in R/bracketsViewer.R
 \name{updateBracketsViewer}
 \alias{updateBracketsViewer}
-\title{Update bracketsViewer data}
+\title{Update bracketsViewer data and/or theme}
 \usage{
 updateBracketsViewer(
   inputId,
-  match_data,
+  match_data = NULL,
+  theme = NULL,
   session = shiny::getDefaultReactiveDomain()
 )
 }
 \arguments{
 \item{inputId}{The input id that the data should be updated for}
 
-\item{match_data}{The new data to use, a list containing the match data with the id}
+\item{match_data}{Optional new match data to apply, a list containing the
+match data with the id. Leave as \code{NULL} to update the theme only.}
+
+\item{theme}{Optional theme to switch to, using the same values accepted
+by the \code{theme} argument of \code{\link{bracketsViewer}}. Leave as
+\code{NULL} to leave the current theme untouched, or pass \code{"default"}
+to explicitly reset to the library's built-in look.}
 
 \item{session}{The Shiny session object}
 }
 \description{
-Update bracketsViewer data
+Update bracketsViewer data and/or theme
 }
