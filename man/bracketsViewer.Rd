@@ -7,6 +7,7 @@
 bracketsViewer(
   data,
   roundWidth = 150,
+  theme = NULL,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -16,6 +17,20 @@ bracketsViewer(
 \item{data}{A list containing the tournaments brackets data, see description}
 
 \item{roundWidth}{The width of the round column in pixels}
+
+\item{theme}{Optional visual theme: either the name of a built-in theme
+(currently \code{"dark"}), or a named list of CSS variable overrides
+using camelCase names, e.g. \code{list(winColor = "#4caf50", matchWidth =
+  "180px")}. Overridable variables: \code{primaryBackground},
+\code{secondaryBackground}, \code{matchBackground}, \code{fontColor},
+\code{winColor}, \code{lossColor}, \code{labelColor}, \code{hintColor},
+\code{connectorColor}, \code{borderColor}, \code{borderHoverColor},
+\code{borderSelectedColor}, \code{textSize}, \code{roundMargin},
+\code{matchWidth}, \code{matchHorizontalPadding},
+\code{matchVerticalPadding}, \code{connectorBorderWidth},
+\code{matchBorderWidth}, \code{matchBorderRadius},
+\code{participantImageSize}. Defaults to \code{NULL}, the library's
+built-in look.}
 
 \item{width}{The width of the widget}
 

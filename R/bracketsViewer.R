@@ -20,19 +20,33 @@
 #' 
 #' @param data A list containing the tournaments brackets data, see description
 #' @param roundWidth The width of the round column in pixels
+#' @param theme Optional visual theme: either the name of a built-in theme
+#'   (currently \code{"dark"}), or a named list of CSS variable overrides
+#'   using camelCase names, e.g. \code{list(winColor = "#4caf50", matchWidth =
+#'   "180px")}. Overridable variables: \code{primaryBackground},
+#'   \code{secondaryBackground}, \code{matchBackground}, \code{fontColor},
+#'   \code{winColor}, \code{lossColor}, \code{labelColor}, \code{hintColor},
+#'   \code{connectorColor}, \code{borderColor}, \code{borderHoverColor},
+#'   \code{borderSelectedColor}, \code{textSize}, \code{roundMargin},
+#'   \code{matchWidth}, \code{matchHorizontalPadding},
+#'   \code{matchVerticalPadding}, \code{connectorBorderWidth},
+#'   \code{matchBorderWidth}, \code{matchBorderRadius},
+#'   \code{participantImageSize}. Defaults to \code{NULL}, the library's
+#'   built-in look.
 #' @param width The width of the widget
 #' @param height The height of the widget
 #' @param elementId The id of the widget
 #' @import htmlwidgets
 #'
 #' @export
-bracketsViewer <- function(data, roundWidth = 150, width = NULL, height = NULL, elementId = NULL) {
+bracketsViewer <- function(data, roundWidth = 150, theme = NULL, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options
   opts = list(
     data = data,
     roundWidth = roundWidth,
-    participantImages = participant_images(data$participant)
+    participantImages = participant_images(data$participant),
+    theme = resolve_theme(theme)
   )
 
   # create widget

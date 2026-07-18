@@ -45,7 +45,8 @@ server <- function(input, output, session) {
   
   output$soccer <- renderBracketsViewer({
     bracketsViewer(
-      data = soccer_data_advanced
+      data = soccer_data_advanced,
+      theme = "dark"
     )
   })
   
