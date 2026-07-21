@@ -141,15 +141,25 @@ HTMLWidgets.widget({
         // change width of elements with class .round
         document.querySelectorAll("#" + elementId + " .round").forEach(function(round) {
           round.style.width = opts.roundWidth + "px";
-          
+
           // also set width of any .match and h3 elements within this round
           round.querySelectorAll(".match").forEach(function(match) {
             match.style.width = opts.roundWidth + "px";
           });
-          
+
           round.querySelectorAll("h3").forEach(function(h3) {
             h3.style.width = opts.roundWidth + "px";
           });
+        });
+
+        // the consolation ("third place") match brackets-viewer.js renders
+        // for single/double elimination stages isn't wrapped in a .round
+        // article the way every other match is - it sits directly under
+        // .rounds - so the loop above never reaches it. Catch it here via
+        // the direct-child combinator, which only matches that case (every
+        // other match's .rounds > .round > .match is one level deeper).
+        document.querySelectorAll("#" + elementId + " .rounds > .match").forEach(function(match) {
+          match.style.width = opts.roundWidth + "px";
         });
 
         //add event listeners on click for elementId + -zoom-in and elementId + -zoom-out

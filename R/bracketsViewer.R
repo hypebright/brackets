@@ -119,8 +119,8 @@ participant_images <- function(participants) {
 #' @importFrom htmltools tags
 bracketsViewer_html <- function(id, style, class, ...) {
   tags$div(
-    id = id, 
-    style = paste0(style, "overflow:scroll;"), 
+    id = id,
+    style = paste0(style, "overflow:auto;"),
     class = class,
     tags$div(
       style = "position: absolute; z-index: 1;",
