@@ -1,0 +1,174 @@
+$bg-deep: #05130c;
+$bg-mid: #0a2016;
+$panel: #0e2a1f;
+$gold: #f2c14e;
+$gold-bright: #ffe17d;
+$emerald: #1fd694;
+$ivory: #f4efe1;
+$ivory-dim: #a9baae;
+
+// a fixed grain texture (feTurbulence noise, desaturated) laid over the
+// gradient below via mix-blend-mode so the background reads as matte
+// stadium concrete rather than a flat digital gradient
+$grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  position: relative;
+  background:
+    radial-gradient(ellipse 900px 520px at 12% -12%, rgba($gold, 0.16), transparent 60%),
+    radial-gradient(ellipse 760px 520px at 92% -6%, rgba($emerald, 0.12), transparent 58%),
+    linear-gradient(165deg, $bg-mid 0%, $bg-deep 55%, #030907 100%);
+  // NOT background-attachment: fixed - that sizes/anchors the gradient to
+  // the viewport rather than the page, so on a page taller than one screen
+  // (any bracket wider than a handful of rounds) it tiles every viewport
+  // height instead of stretching smoothly to the actual bottom of the page.
+  background-repeat: no-repeat;
+  color: $ivory;
+  overflow-x: hidden;
+
+  &::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: $grain;
+    background-size: 160px 160px;
+  }
+}
+
+.wc-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+@keyframes wc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wc-header {
+  text-align: center;
+  margin-bottom: 2.25rem;
+  animation: wc-rise 0.7s ease both;
+}
+
+.wc-kicker {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: $emerald;
+  margin-bottom: 0.6rem;
+}
+
+.wc-title {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  line-height: 1;
+  margin: 0 0 0.5rem;
+  color: $ivory;
+  text-shadow: 0 0 40px rgba($gold, 0.25);
+
+  span {
+    background: linear-gradient(120deg, $gold, $gold-bright 50%, $gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.wc-subtitle {
+  font-family: 'Manrope', sans-serif;
+  color: $ivory-dim;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.wc-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  animation: wc-rise 0.7s 0.12s ease both;
+  // the entrance animation's final keyframe leaves `transform: translateY(0)`
+  // in place (needed so nothing flashes at full size before it plays), and
+  // any non-"none" transform creates a stacking context. Without an explicit
+  // z-index here, .wc-panel - a later sibling with the same kind of lingering
+  // transform - would win document-order stacking and paint over the
+  // selectize dropdown popup, which lives inside this element.
+  position: relative;
+  z-index: 2;
+}
+
+.wc-phase-select {
+  min-width: 260px;
+
+  label {
+    display: block;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: $ivory-dim;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .form-select {
+    background-color: rgba($panel, 0.8);
+    border: 1px solid rgba($gold, 0.35);
+    color: $ivory;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    padding: 0.6rem 2.2rem 0.6rem 1rem;
+    border-radius: 999px;
+    text-align: center;
+    text-align-last: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:focus {
+      border-color: $gold;
+      box-shadow: 0 0 0 3px rgba($gold, 0.2), 0 6px 20px rgba(0, 0, 0, 0.35);
+      outline: none;
+    }
+
+    option {
+      background-color: $panel;
+      color: $ivory;
+    }
+  }
+}
+
+.wc-panel {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba($panel, 0.9), rgba($bg-mid, 0.85));
+  border: 1px solid rgba($emerald, 0.18);
+  border-radius: 20px;
+  padding: 1.75rem clamp(0.5rem, 3vw, 2rem);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  animation: wc-rise 0.8s 0.2s ease both;
+}

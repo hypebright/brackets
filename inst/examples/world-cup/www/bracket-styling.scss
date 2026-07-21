@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@500;700;800&display=swap');
+
+$gold: #f2c14e;
+$emerald: #1fd694;
+
+.brackets-viewer {
+  font-family: 'Manrope', sans-serif;
+
+  h1, h2, h3 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  // .opponents is the tightly-fit match card; .match is the flex slot that
+  // also carries connector-alignment spacing, so effects on .match itself
+  // look oversized past round 1.
+  .opponents {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba($gold, 0.4);
+    }
+  }
+
+  .participant .name img {
+    border-radius: 50%;
+    border: 2px solid rgba($emerald, 0.6);
+    object-fit: cover;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .participant:hover .name img {
+    transform: scale(1.14);
+  }
+
+  // gold ring on the winning side's flag, on top of the library's own
+  // bold-name/coloured-score win styling
+  .participant.win .name img {
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.25), 0 0 10px rgba($gold, 0.35);
+  }
+}
+
+// the widget's own outer container (:scope, the root this customCSS is
+// scoped to) is the one that actually scrolls horizontally once the bracket
+// is wider than its panel; style its scrollbar to match rather than leaving
+// the browser default
+:scope {
+  scrollbar-color: $emerald rgba(255, 255, 255, 0.06);
+
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $emerald;
+    border-radius: 10px;
+
+    &:hover {
+      background: $gold;
+    }
+  }
+}
+
+.brackets-viewer-zoom-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $emerald, darken($emerald, 12%));
+  color: #06140d;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 14px rgba($gold, 0.5);
+  }
+
+  & + & {
+    margin-left: 8px;
+  }
+}
