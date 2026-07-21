@@ -158,11 +158,13 @@ shinyApp(ui, server)
 
 You can find more extensive examples in the [example Shiny app](https://github.com/hypebright/brackets/tree/main/inst/examples).
 
+## Sponsor: AthlyticZ
+
+This package is sponsored by AthlyticZ. They run live data science [masterclasses](https://athlyticz.com/masterclass?am_id=veerle1180): 10+ sessions a month, straight from the people building the field, covering everything from Bayesian stats to ML deployment. Worth a look if you want to keep on learning! R, Python, Shiny, React... There's something for everybody!
+
 ## CustomiZing WidgetZ course
 
-This package was developed during the [CustomiZing WidgetZ](https://athlyticz.com/shiny-iii) course. During this course you will learn everything about Shiny package development: from the basics of HTML, CSS, and JavaScript to the way Shiny builds the UI and deals with dependencies. You will learn how to create custom Shiny inputs and outputs, and how to build any widget you can possibly imagine. You will also learn about [{htmlwidgets}](https://www.htmlwidgets.org), which is the foundation of the {brackets} package.
-
-[<img src="man/figures/athlyticz.png">](https://athlyticz.com/shiny-iii)
+This package was developed during the [CustomiZing WidgetZ](https://athlyticz.com/courses/customizing-widgets) course. During this course you will learn everything about Shiny package development: from the basics of HTML, CSS, and JavaScript to the way Shiny builds the UI and deals with dependencies. You will learn how to create custom Shiny inputs and outputs, and how to build any widget you can possibly imagine. You will also learn about [{htmlwidgets}](https://www.htmlwidgets.org), which is the foundation of the {brackets} package.
 
 ## Acknowledgements
 
