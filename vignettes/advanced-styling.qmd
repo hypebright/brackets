@@ -329,7 +329,7 @@ Once you've got more than a handful of rules,it's recommended to use a file inst
 already exist:
 
 ```r
-# inst/examples/www/advanced-styling.scss holds the rules above, written as
+# inst/examples/tennis-soccer/www/advanced-styling.scss holds the rules above, written as
 # actual Sass (with variables, nesting and `&`) instead of one long string
 bracketsViewer(soccer_data, theme = "dark", customCSS = "advanced-styling.scss")
 ```

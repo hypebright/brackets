@@ -26,6 +26,52 @@ function applyTheme(elementId, theme) {
   if (!styleTag) document.head.appendChild(tag);
 }
 
+// Splits `css` into its top-level @import statements and everything else.
+// A plain /@import[^;]+;/ regex stops at the first semicolon, but a Google
+// Fonts URL like ...family=Manrope:wght@500;700;800... has semicolons of
+// its own inside the quoted string, well before the one that actually ends
+// the statement. This scans character by character instead, so a semicolon
+// only ends the @import once it's outside any quotes and outside url(...).
+function extractImports(css) {
+  const imports = [];
+  let rest = "";
+  let i = 0;
+
+  while (i < css.length) {
+    const start = css.indexOf("@import", i);
+    if (start === -1) {
+      rest += css.slice(i);
+      break;
+    }
+    rest += css.slice(i, start);
+
+    let end = start;
+    let quote = null;
+    let parenDepth = 0;
+    while (end < css.length) {
+      const char = css[end];
+      if (quote) {
+        if (char === quote) quote = null;
+      } else if (char === '"' || char === "'") {
+        quote = char;
+      } else if (char === "(") {
+        parenDepth++;
+      } else if (char === ")") {
+        parenDepth--;
+      } else if (char === ";" && parenDepth === 0) {
+        break;
+      }
+      end++;
+    }
+    end = Math.min(end + 1, css.length); // include the terminating ";", if any
+
+    imports.push(css.slice(start, end));
+    i = end;
+  }
+
+  return { imports: imports, rest: rest };
+}
+
 // Writes opts.customCSS (a raw CSS string from R, either typed directly or
 // read from a .css/.scss file) as its own <style> block, scoped to this
 // widget's outer container (containerId), and appended after the theme
@@ -47,11 +93,9 @@ function applyCustomCSS(containerId, css) {
 
   // @import has to come before any other rule in a stylesheet, so it can't
   // live inside @scope; pull it out and keep it at the top level instead.
-  const imports = [];
-  const rest = css.replace(/@import[^;]+;/g, function(match) {
-    imports.push(match);
-    return "";
-  });
+  const extracted = extractImports(css);
+  const imports = extracted.imports;
+  const rest = extracted.rest;
 
   const tag = styleTag || document.createElement("style");
   tag.id = containerId + "-custom-css";
