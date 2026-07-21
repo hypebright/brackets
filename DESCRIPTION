@@ -1,6 +1,6 @@
 Package: brackets
 Title: Display Tournament Brackets
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person("Veerle", "Eeftink - van Leemput", , "veerle@hypebright.nl", role = c("aut", "cre"))
 Maintainer: Veerle van Leemput <veerle@hypebright.nl>
